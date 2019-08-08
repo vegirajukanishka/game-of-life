@@ -1,25 +1,16 @@
-node {
-    stage('SCM') {
-        git 'https://github.com/asquarezone/game-of-life.git'
+pipeline {
+    agent any
+    stages {   
+        stage('Cloning Git') {
+            steps {
+            node ('MAVEN') {
+                git 'https://github.com/asquarezone/game-of-life.git'
+                sh label:'',script:''' mvn clean package '''
+                archive 'gameoflife-web/target/gameoflife.war'
+                junit 'gameoflife-web/target/surefire-reports/*.xml'
+                sh label:'',script: 'sudo docker build -t kani:2.9 .'
+            }
+        }     
     }
-    
-    stage('Build & Package') {
-        withSonarQubeEnv('sonar') {
-            sh 'mvn clean package sonar:sonar'
-        }
-    }
-    
-    stage("Quality Gate") {
-        timeout(time: 1, unit: 'HOURS') {
-              def qg = waitForQualityGate()
-              if (qg.status != 'OK') {
-                  error "Pipeline aborted due to quality gate failure: ${qg.status}"
-              }
-          }
-    }
-    
-    stage('Results'){
-        archive 'gameoflife-web/target/gameoflife.war'
-        junit 'gameoflife-web/target/surefire-reports/*.xml'
     }
 }
