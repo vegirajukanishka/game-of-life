@@ -12,7 +12,7 @@ pipeline {
                 sh label:'',script: 'sudo docker run -d -p 8069:8080 --name kanis kani:2.0'
                 sh label: '',script: 'docker login --username kanishkaraju --password kanishka@13'
                 sh label: '',script: 'sudo docker tag kani:2.0 kanishkaraju/raju'
-                sh label: '',script: 'sudo docker push kanishkaraju/kani:2.0'
+                sh label: '',script: 'sudo docker push kanishkaraju/raju:kani:2.0'
             }
         }     
         }
