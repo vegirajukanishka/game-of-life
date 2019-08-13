@@ -9,7 +9,7 @@ pipeline {
                 archive 'gameoflife-web/target/gameoflife.war'
                 junit 'gameoflife-web/target/surefire-reports/*.xml'
                 sh label:'',script: 'sudo docker build -t gol .'
-                sh label:'',script: 'sudo docker run -d -p 8063:8080 --name kansk gol'
+                sh label:'',script: 'sudo docker run -d -p 8065:8080 --name kan9 gol'
                 sh label: '',script: 'sudo docker login --username kanishkaraju --password kanishka@13'
                 sh label: '',script: 'sudo docker tag kani:2.0 kanishkaraju/raju'
                 sh label: '',script: 'sudo docker push kanishkaraju/raju:gol'
