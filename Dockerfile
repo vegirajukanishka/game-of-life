@@ -1,5 +1,4 @@
 FROM tomcat:8
-RUN apt-get update && apt-get install iputils-ping
-COPY gameoflife-web/target/gameoflife.war /usr/local/tomcat/webapps/
+ADD wget http://54.214.53.129:8081/artifactory/docker/gameoflife.war /usr/local/tomcat/webapps/
 EXPOSE 8080
 CMD ["catalina.sh", "run"]
